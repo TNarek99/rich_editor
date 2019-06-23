@@ -1,0 +1,17 @@
+export const BACKSPACE = "Backspace";
+export const TAB = "Tab";
+export const ENTER = "Enter";
+export const PAGE_UP = "PageUp";
+export const PAGE_DOWN = "PageDown";
+export const HOME = "Home";
+export const END = "End";
+export const SHIFT = "Shift";
+export const META = "Meta";
+export const CTRL = "Control";
+export const ALT = "Alt";
+export const CAPSLOCK = "CapsLock";
+export const ESCAPE = "Escape";
+export const ARROW_LEFT = "ArrowLeft";
+export const ARROW_RIGHT = "ArrowRight";
+export const ARROW_DOWN = "ArrowDown";
+export const ARROW_UP = "ArrowUp";
