@@ -7,7 +7,11 @@ class _EditorUtils {
     symbolKeys.ESCAPE,
     symbolKeys.CAPSLOCK,
     symbolKeys.META,
-    symbolKeys.SHIFT
+    symbolKeys.SHIFT,
+    symbolKeys.ARROW_DOWN,
+    symbolKeys.ARROW_LEFT,
+    symbolKeys.ARROW_RIGHT,
+    symbolKeys.ARROW_UP
   ];
   DOUBLE_SPACE = "  ";
 
@@ -39,6 +43,19 @@ class _EditorUtils {
   };
 
   getTextValueForInputSymbol = symbol => value => `${value}${symbol}`;
+
+  getCursorIndexForAddedSymbol = symbol => cursorIndex => {
+    const { ARROW_LEFT, ARROW_RIGHT } = symbolKeys;
+    const backStepIndex = cursorIndex - 1 < 0 ? 0 : cursorIndex - 1;
+    const forwardStepIndex = cursorIndex + 1;
+    if (symbol === ARROW_LEFT) {
+      return backStepIndex;
+    }
+    if (symbol === ARROW_RIGHT) {
+      return forwardStepIndex;
+    }
+    return cursorIndex;
+  };
 }
 
 export const EditorUtils = new _EditorUtils();

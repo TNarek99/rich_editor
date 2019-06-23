@@ -8,7 +8,13 @@ type Props = {
   onChange: Function
 };
 
-type State = {};
+type State = {
+  cursorIndex: number
+};
+
+const initialState = {
+  cursorIndex: 0
+};
 
 export class TextBox extends Component<Props, State> {
   static defaultProps = {
@@ -18,9 +24,7 @@ export class TextBox extends Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.state = {
-      isActive: false
-    };
+    this.state = initialState;
     this.textBoxRef = React.createRef();
   }
 
@@ -33,19 +37,40 @@ export class TextBox extends Component<Props, State> {
     const { onChange, value } = this.props;
     e.preventDefault();
     onChange(EditorUtils.getTextValueForAddedSymbol(symbol)(value));
+    this.setCursorIndexForSymbol(symbol);
   };
 
-  render() {
-    const { value } = this.props;
+  setCursorIndexForSymbol = (symbol: string) => {
+    const cursorIndex = EditorUtils.getCursorIndexForAddedSymbol(symbol)(
+      this.state.cursorIndex
+    );
+    this.setState({ cursorIndex });
+  };
 
+  mapValueSymbolToContent = (valueSymbol: string, index: number) => {
+    const { cursorIndex } = this.state;
+    if (index === cursorIndex) {
+      return (
+        <>
+          <Cursor />
+          {valueSymbol}
+        </>
+      );
+    }
+    return valueSymbol;
+  };
+
+  renderContent = () =>
+    this.props.value.split("").map(this.mapValueSymbolToContent);
+
+  render() {
     return (
       <div
         ref={this.textBoxRef}
         onKeyDown={this.textBoxKeyDownHandler}
         tabIndex="0"
       >
-        {value}
-        <Cursor />
+        {this.renderContent()}
       </div>
     );
   }
